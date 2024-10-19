@@ -3,6 +3,7 @@
   "cli": {
     "packageManager": "pnpm"
   },
+  "defaultBase": "main",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
