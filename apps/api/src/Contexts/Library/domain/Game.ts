@@ -1,22 +1,37 @@
 import { Entity } from '../../Shared/Domain';
-import { GameProps } from './Game.props';
+import { GamePrimitivesProps, GameProps } from './Game.props';
+import { GameId } from './GameId';
 import { GameName } from './GameName';
 
-export class Game extends Entity<string, GameProps> {
+export class Game extends Entity<GameId, GamePrimitivesProps> {
   private _name: GameName;
 
+  static create(
+    uniqueIdentity: string,
+    name: string,
+    nameLanguage: string,
+    gameType: string
+  ) {
+    return new Game({
+      id: new GameId(name, uniqueIdentity),
+      name: new GameName(name, nameLanguage),
+    });
+  }
   protected constructor(props: GameProps) {
     super();
+    this.id = props.id;
     this.name = props.name;
   }
-  protected set name(name: string) {
-    this._name = new GameName(name);
+  private set name(name: GameName) {
+    this._name = name;
   }
-
-  get id(): string {
-    throw new Error('Method not implemented.');
-  }
-  toPrimitives(): GameProps {
-    throw new Error('Method not implemented.');
+  toPrimitives(): GamePrimitivesProps {
+    return {
+      id: this.id.value,
+      name: {
+        label: this._name.value,
+        language: this._name.language,
+      },
+    };
   }
 }

@@ -8,8 +8,9 @@ export class GameId {
     if (uniqueString.length < 5)
       throw new RangeError('Unique string must be at least 4 characters');
     const formattedName = gameName
-      .trim()
-      .replace(' ', '-')
+      .split('-')
+      .map((parOfName) => parOfName.trim().replace(/ /g, '-'))
+      .join('-')
       .toLocaleLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');

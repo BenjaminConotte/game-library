@@ -12,4 +12,10 @@ describe('GameId', () => {
     const gameId = new GameId(gameName, uniqueString);
     expect(gameId.value).toBe(`harry-potter-d2b6b8b0`);
   });
+  it('should replace all space by a dash.', () => {
+    const name = 'Harry Potter - Bataille à Poudlard';
+    const uniqueString = 'd2b6b8b0-4b7b-4b7b-8b0b-4b7b8b0b7b4b';
+    const gameId = new GameId(name, uniqueString);
+    expect(gameId.value).toBe(`harry-potter-bataille-a-poudlard-d2b6b8b0`);
+  });
 });
