@@ -1,7 +1,7 @@
 import { Entity } from '../../Shared/Domain';
-import { GamePrimitivesProps, GameProps } from './Game.props';
 import { GameId } from './GameId';
 import { GameName } from './GameName';
+import { GamePrimitivesProps, GameProps } from './GameProps';
 
 export class Game extends Entity<GameId, GamePrimitivesProps> {
   private _name: GameName;

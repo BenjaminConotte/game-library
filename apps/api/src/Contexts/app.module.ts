@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { LibraryModule } from './Library/library.module';
 
 @Module({
-  imports: [LibraryModule],
+  imports: [],
   controllers: [],
   providers: [],
 })
