@@ -18,5 +18,7 @@
   "redhat.telemetry.enabled": true,
   "git.enableSmartCommit": true,
   "editor.minimap.enabled": false,
-  "terminal.integrated.fontFamily": "GoMono Nerd Font"
+  "terminal.integrated.fontFamily": "GoMono Nerd Font",
+  "jest.jestCommandLine": "./node_modules/.bin/jest",
+  "jest.rootPath": "."
 }
