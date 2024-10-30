@@ -22,6 +22,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: List files
+        run: ls -la
+
+      - name: Display pnpm-lock file
+        run: cat pnpm-lock.yaml
+
       - uses: pnpm/action-setup@v4
         with:
           version: 9
