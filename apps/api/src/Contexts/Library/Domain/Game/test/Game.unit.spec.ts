@@ -5,8 +5,18 @@ describe('Game', () => {
     const ean = '0123456789123';
     const gameName = 'Harry Potter - Battle of Hogwarts';
     const gameLanguage = 'en';
-    const gameType = GameTypeEnum.BOARD_GAME.toString();
-    const game = Game.create(ean, gameName, gameLanguage, gameType);
+    const gameType = GameTypeEnum.BOARD_GAME;
+    const game = Game.create({
+      ean: ean,
+      name: {
+        label: gameName,
+        language: gameLanguage,
+      },
+      type: {
+        label: gameType,
+        isCooperative: false,
+      },
+    });
     expect(game).toBeInstanceOf(Game);
     expect(game.id.value).toEqual(ean);
     expect(game.toPrimitives()).toEqual({

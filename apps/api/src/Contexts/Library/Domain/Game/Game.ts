@@ -1,7 +1,7 @@
 import { Aggregate } from '../../../Shared/Domain/Aggregate';
 import { EAN } from './EAN';
 import { GameName } from './GameName';
-import { GamePrimitivesProps, GameProps } from './GameProps';
+import { CreateGameProps, GamePrimitivesProps, GameProps } from './GameProps';
 import { GameType } from './GameType';
 
 export class Game extends Aggregate<EAN, GamePrimitivesProps> {
@@ -21,17 +21,11 @@ export class Game extends Aggregate<EAN, GamePrimitivesProps> {
     this._type = type;
   }
 
-  static create(
-    ean: string,
-    name: string,
-    nameLanguage: string,
-    gameType: string,
-    isCooperative = false
-  ) {
+  static create(props: CreateGameProps) {
     return new Game({
-      id: new EAN(ean),
-      name: new GameName(name, nameLanguage),
-      type: new GameType(gameType, isCooperative),
+      id: new EAN(props.ean),
+      name: new GameName(props.name.label, props.name.language),
+      type: new GameType(props.type.label, props.type.isCooperative),
     });
   }
   toPrimitives(): GamePrimitivesProps {
