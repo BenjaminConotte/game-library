@@ -1,10 +1,10 @@
 import { Aggregate } from '../../../Shared/Domain/Aggregate';
-import { GameId } from './GameId';
+import { EAN } from './EAN';
 import { GameName } from './GameName';
 import { GamePrimitivesProps, GameProps } from './GameProps';
 import { GameType } from './GameType';
 
-export class Game extends Aggregate<GameId, GamePrimitivesProps> {
+export class Game extends Aggregate<EAN, GamePrimitivesProps> {
   private _name: GameName;
   private _type: GameType;
 
@@ -22,14 +22,14 @@ export class Game extends Aggregate<GameId, GamePrimitivesProps> {
   }
 
   static create(
-    uniqueIdentity: string,
+    ean: string,
     name: string,
     nameLanguage: string,
     gameType: string,
     isCooperative = false
   ) {
     return new Game({
-      id: new GameId(gameType, name, uniqueIdentity),
+      id: new EAN(ean),
       name: new GameName(name, nameLanguage),
       type: new GameType(gameType, isCooperative),
     });

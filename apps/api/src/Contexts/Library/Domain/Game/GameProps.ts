@@ -1,9 +1,9 @@
-import { GameId } from './GameId';
+import { EAN } from './EAN';
 import { GameName } from './GameName';
 import { GameType } from './GameType';
 
 export type GameProps = {
-  id: GameId;
+  id: EAN;
   name: GameName;
   type: GameType;
 };

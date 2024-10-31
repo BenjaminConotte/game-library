@@ -1,3 +1,6 @@
 import { Entity } from './Entity';
 
-export abstract class Aggregate<EntityId, T> extends Entity<EntityId, T> {}
+export abstract class Aggregate<EntityId = unknown, T = unknown> extends Entity<
+  EntityId,
+  T
+> {}
