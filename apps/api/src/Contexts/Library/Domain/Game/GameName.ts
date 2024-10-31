@@ -1,4 +1,4 @@
-import { LanguageEnum } from '../../Shared/Domain';
+import { LanguageEnum } from '../../../Shared/Domain';
 
 export class GameName {
   private _value: string;

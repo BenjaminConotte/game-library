@@ -1,12 +1,25 @@
-import { Entity } from '../../Shared/Domain';
+import { Aggregate } from '../../../Shared/Domain/Aggregate';
 import { GameId } from './GameId';
 import { GameName } from './GameName';
 import { GamePrimitivesProps, GameProps } from './GameProps';
 import { GameType } from './GameType';
 
-export class Game extends Entity<GameId, GamePrimitivesProps> {
+export class Game extends Aggregate<GameId, GamePrimitivesProps> {
   private _name: GameName;
   private _type: GameType;
+
+  protected constructor(props: GameProps) {
+    super();
+    this.id = props.id;
+    this.name = props.name;
+    this.type = props.type;
+  }
+  private set name(name: GameName) {
+    this._name = name;
+  }
+  private set type(type: GameType) {
+    this._type = type;
+  }
 
   static create(
     uniqueIdentity: string,
@@ -20,18 +33,6 @@ export class Game extends Entity<GameId, GamePrimitivesProps> {
       name: new GameName(name, nameLanguage),
       type: new GameType(gameType, isCooperative),
     });
-  }
-  protected constructor(props: GameProps) {
-    super();
-    this.id = props.id;
-    this.name = props.name;
-    this.type = props.type;
-  }
-  private set name(name: GameName) {
-    this._name = name;
-  }
-  private set type(type: GameType) {
-    this._type = type;
   }
   toPrimitives(): GamePrimitivesProps {
     return {
