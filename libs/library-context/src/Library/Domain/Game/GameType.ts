@@ -1,6 +1,6 @@
 export class GameType {
-  private _value: string;
-  private _isCooperative: boolean;
+  private _value!: string;
+  private _isCooperative!: boolean;
 
   constructor(value: string, isCooperative = false) {
     this.value = value;
@@ -9,13 +9,13 @@ export class GameType {
   get value() {
     return this._value;
   }
-  protected set value(value) {
+  private set value(value) {
     this._value = value;
   }
   get isCooperative() {
     return this._isCooperative;
   }
-  protected set isCooperative(isCooperative: boolean) {
+  private set isCooperative(isCooperative: boolean) {
     this._isCooperative = isCooperative;
   }
 }

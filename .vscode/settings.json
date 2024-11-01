@@ -11,6 +11,7 @@
     "source.fixAll.eslint": "always",
     "source.organizeImports": "explicit"
   },
+  "typescript.preferences.importModuleSpecifier": "project-relative",
   "editor.formatOnPaste": true,
   "eslint.format.enable": true,
   "editor.linkedEditing": true,
