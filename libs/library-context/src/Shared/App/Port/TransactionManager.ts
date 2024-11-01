@@ -1,5 +1,5 @@
 export interface TransactionManager {
-  startTransaction(): void;
-  commitTransaction(): void;
+  startTransaction(): Promise<void>;
+  commitTransaction(): Promise<void>;
   rollbackTransaction(): void;
 }
