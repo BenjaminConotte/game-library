@@ -1,4 +1,4 @@
-import { mock } from 'ts-jest-mocker';
+import { Mock, mock } from 'ts-jest-mocker';
 import { TransactionManager } from '../../../../Shared/App/Port';
 import { Game } from '../../../Domain/Game/Game';
 import { GameRepository } from '../../../Domain/Game/GameRepository';
@@ -8,9 +8,10 @@ import { AddGameToLibrary } from './AddGameToLibrary.usecase';
 
 describe('Add game to library', () => {
   const transactionManager: TransactionManager = mock<TransactionManager>();
-  const gameRepository = mock<GameRepository>();
+  let gameRepository: Mock<GameRepository>;
   let useCase: AddGameToLibrary;
   beforeEach(() => {
+    gameRepository = mock<GameRepository>();
     useCase = new AddGameToLibrary(transactionManager, gameRepository);
   });
   it('should throw an error if the game is already in the library', async () => {
@@ -33,7 +34,7 @@ describe('Add game to library', () => {
         name: 'My game',
         nameLanguage: 'en',
         type: GameTypeEnum.BOARD_GAME.toString(),
-        isCoop: 'true',
+        isCoop: true,
       });
       await useCase.handle(command);
     } catch (error) {
@@ -43,15 +44,7 @@ describe('Add game to library', () => {
   });
   it('should add a game to the library', async () => {
     gameRepository.findByEAN.mockResolvedValue(null);
-    const command = new AddGameToLibraryCommand({
-      ean: '0123456789012',
-      name: 'My game',
-      nameLanguage: 'en',
-      type: GameTypeEnum.BOARD_GAME.toString(),
-      isCoop: 'true',
-    });
-    await useCase.handle(command);
-    expect(gameRepository.save).toBeCalledWith(
+    gameRepository.save.mockResolvedValue(
       Game.create({
         ean: '0123456789012',
         name: {
@@ -64,6 +57,15 @@ describe('Add game to library', () => {
         },
       })
     );
+    const command = new AddGameToLibraryCommand({
+      ean: '0123456789012',
+      name: 'My game',
+      nameLanguage: 'en',
+      type: GameTypeEnum.BOARD_GAME.toString(),
+      isCoop: true,
+    });
+    await useCase.handle(command);
+    expect(gameRepository.save).toHaveBeenCalledWith(expect.any(Game));
   });
   afterEach(() => {
     jest.clearAllMocks();

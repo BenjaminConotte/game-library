@@ -5,7 +5,7 @@ type AddGameToLibraryCommandBody = {
   name: string;
   nameLanguage: string;
   type: string;
-  isCoop: string;
+  isCoop: boolean;
 };
 export class AddGameToLibraryCommand
   implements Command<AddGameToLibraryCommandBody>
