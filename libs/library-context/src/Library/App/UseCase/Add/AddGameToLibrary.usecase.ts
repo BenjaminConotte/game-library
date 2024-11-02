@@ -15,11 +15,6 @@ export class AddGameToLibrary extends CommandHandler<
   ) {
     super(transactionManager);
   }
-  setupTransaction(): Promise<void> {
-    return this._transactionManager.startTransaction().then(() => {
-      this._gameRepository.defineTransaction(this._transactionManager);
-    });
-  }
   async handle(command: AddGameToLibraryCommand): Promise<void> {
     if (await this._gameRepository.findByEAN(command.body.ean)) {
       throw new RangeError('Game is already in the library');
@@ -37,5 +32,10 @@ export class AddGameToLibrary extends CommandHandler<
         },
       })
     );
+  }
+  async setupTransaction(): Promise<void> {
+    return this._transactionManager.startTransaction().then(() => {
+      this._gameRepository.defineTransaction(this._transactionManager);
+    });
   }
 }
