@@ -8,7 +8,7 @@ export class Game extends Aggregate<EAN, GamePrimitivesProps> {
   private _name: GameName;
   private _type: GameType;
 
-  protected constructor(props: GameProps) {
+  constructor(props: GameProps) {
     super();
     this.id = props.id;
     this.name = props.name;
