@@ -1,5 +1,5 @@
 import { CommandHandler } from 'libs/library-context/src/Shared/App/Command';
-import { TransactionManager } from '../../../../Shared/App/Port';
+import { TransactionManager } from '../../../../Shared/Domain';
 import { GameRepository } from '../../../Domain/Game';
 import { Game } from '../../../Domain/Game/Game';
 import { GameTypeEnum } from '../../../Domain/Game/GameTypeEnum';
@@ -14,6 +14,11 @@ export class AddGameToLibrary extends CommandHandler<
     private readonly _gameRepository: GameRepository
   ) {
     super(transactionManager);
+  }
+  setupTransaction(): Promise<void> {
+    return this._transactionManager.startTransaction().then(() => {
+      this._gameRepository.defineTransaction(this._transactionManager);
+    });
   }
   async handle(command: AddGameToLibraryCommand): Promise<void> {
     if (await this._gameRepository.findByEAN(command.body.ean)) {

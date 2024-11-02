@@ -1,5 +1,5 @@
 import { Mock, mock } from 'ts-jest-mocker';
-import { TransactionManager } from '../../../../Shared/App/Port';
+import { TransactionManager } from '../../../../Shared/Domain';
 import { Game } from '../../../Domain/Game/Game';
 import { GameRepository } from '../../../Domain/Game/GameRepository';
 import { GameTypeEnum } from '../../../Domain/Game/GameTypeEnum';
