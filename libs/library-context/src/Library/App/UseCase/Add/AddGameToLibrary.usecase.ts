@@ -14,6 +14,8 @@ export class AddGameToLibrary extends CommandHandler<
     super(transactionManager);
   }
   async handle(command: AddGameToLibraryCommand): Promise<void> {
-    throw new RangeError('Method not implemented.');
+    if (await this._gameRepository.findByEAN(command.body.ean)) {
+      throw new RangeError('Game is already in the library');
+    }
   }
 }
