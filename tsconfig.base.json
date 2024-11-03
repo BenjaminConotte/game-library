@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@game-library/library-context/*": ["libs/library-context/src/*"]
+      "@game-library/library-context/*": ["libs/feature-library-context/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

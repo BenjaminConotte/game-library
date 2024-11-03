@@ -1,5 +1,5 @@
 {
-  "name": "@game-library/library-context",
+  "name": "@game-library/feature-library-context",
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"

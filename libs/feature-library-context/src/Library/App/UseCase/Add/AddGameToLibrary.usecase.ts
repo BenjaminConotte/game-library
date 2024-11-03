@@ -1,4 +1,4 @@
-import { CommandHandler } from 'libs/library-context/src/Shared/App/Command';
+import { CommandHandler } from '../../../../Shared/App/Command';
 import { TransactionManager } from '../../../../Shared/Domain';
 import { GameRepository } from '../../../Domain/Game';
 import { Game } from '../../../Domain/Game/Game';

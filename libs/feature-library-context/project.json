@@ -1,0 +1,19 @@
+{
+  "name": "feature-library-context",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/feature-library-context/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/feature-library-context",
+        "main": "libs/feature-library-context/src/index.ts",
+        "tsConfig": "libs/feature-library-context/tsconfig.lib.json",
+        "assets": ["libs/feature-library-context/*.md"]
+      }
+    }
+  }
+}
