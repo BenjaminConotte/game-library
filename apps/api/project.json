@@ -22,6 +22,13 @@
         }
       }
     },
+    "component-tests": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/api/jest.config.ts",
+        "testPathPattern": [".*\\.component\\.(spec\\.ts|test\\.js)$"]
+      }
+    },
     "docker-build": {
       "dependsOn": ["build"],
       "command": "docker build -f apps/api/Dockerfile . -t api"

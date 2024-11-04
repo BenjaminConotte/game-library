@@ -20,7 +20,9 @@ export class DatabaseGameRepository implements GameRepository {
     return this._dataSource
       .getRepository<GamePrimitivesProps>(GameSchema)
       .findOneBy({ id: ean })
-      .then((props) => this.convertToAggregate(props));
+      .then((props) => {
+        return props ? this.convertToAggregate(props) : null;
+      });
   }
   async save(game: Game): Promise<Game> {
     if (this._queryBuilder) {

@@ -19,19 +19,18 @@ export class AddGameToLibrary extends CommandHandler<
     if (await this._gameRepository.findByEAN(command.body.ean)) {
       throw new RangeError('Game is already in the library');
     }
-    this._gameRepository.save(
-      Game.create({
-        ean: command.body.ean,
-        name: {
-          label: command.body.name,
-          language: command.body.nameLanguage,
-        },
-        type: {
-          label: command.body.type as GameTypeEnum,
-          isCooperative: command.body.isCoop,
-        },
-      })
-    );
+    const gameToCreate = Game.create({
+      ean: command.body.ean,
+      name: {
+        label: command.body.name,
+        language: command.body.nameLanguage,
+      },
+      type: {
+        label: command.body.type as GameTypeEnum,
+        isCooperative: command.body.isCoop,
+      },
+    });
+    await this._gameRepository.save(gameToCreate);
   }
   async setupTransaction(): Promise<void> {
     return this._transactionManager.startTransaction().then(() => {

@@ -1,22 +1,18 @@
-import { GameName } from '@game-library/library-context/Library/Domain/Game';
 import { GamePrimitivesProps } from '@game-library/library-context/Library/Domain/Game/GameProps';
 import { EntitySchema } from 'typeorm';
 
-const GameNameSchema = new EntitySchema<GameName>({
+const GameNameSchema = new EntitySchema({
   name: 'name',
   columns: {
-    value: {
-      type: String,
-      nullable: false,
-    },
-    language: { type: String, nullable: false },
+    label: { name: 'label', type: String, nullable: false },
+    language: { name: 'language', type: String, nullable: false },
   },
 });
 const GameTypeSchema = new EntitySchema({
   name: 'type',
   columns: {
-    label: { type: String, nullable: false },
-    isCooperative: { type: Boolean, nullable: false },
+    label: { name: 'label', type: String, nullable: false },
+    isCooperative: { name: 'isCooperative', type: Boolean, nullable: false },
   },
 });
 export const GameSchema = new EntitySchema<GamePrimitivesProps>({
