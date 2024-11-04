@@ -25,6 +25,12 @@
     "docker-build": {
       "dependsOn": ["build"],
       "command": "docker build -f apps/api/Dockerfile . -t api"
+    },
+    "docker-dependencies": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm install"
+      }
     }
   },
   "implicitDependencies": ["feature-library-context"]

@@ -1,4 +1,9 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { GameSchema } from './infra/typeorm/schema';
 
-@Module({})
+@Module({
+  imports: [TypeOrmModule.forFeature([GameSchema])],
+  exports: [TypeOrmModule],
+})
 export class LibraryModule {}

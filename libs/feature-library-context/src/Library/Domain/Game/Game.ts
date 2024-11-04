@@ -28,6 +28,13 @@ export class Game extends Aggregate<EAN, GamePrimitivesProps> {
       type: new GameType(props.type.label, props.type.isCooperative),
     });
   }
+  static instanciate(props: GamePrimitivesProps): Game {
+    return new Game({
+      id: new EAN(props.id),
+      name: new GameName(props.name.label, props.name.language),
+      type: new GameType(props.type.label, props.type.isCooperative),
+    });
+  }
   toPrimitives(): GamePrimitivesProps {
     return {
       id: this.id.value,
