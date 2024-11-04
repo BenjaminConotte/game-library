@@ -83,7 +83,7 @@ describe('AddGameToLibrary', () => {
       isCoop: false,
     });
     await dataSource.query(
-      'INSERT INTO tbl_game (id, name_Label, name_Language, type_Label, type_Iscooperative) VALUES ($1, $2, $3, $4, $5)',
+      'INSERT INTO tbl_game (id, "name_Label", "name_Language", "type_Label", "type_Iscooperative") VALUES ($1, $2, $3, $4, $5)',
       [
         cmd.body.ean,
         cmd.body.name,

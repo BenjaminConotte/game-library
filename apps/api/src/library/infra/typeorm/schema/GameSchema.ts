@@ -4,7 +4,11 @@ import { EntitySchema } from 'typeorm';
 const GameNameSchema = new EntitySchema({
   name: 'name',
   columns: {
-    label: { name: 'label', type: String, nullable: false },
+    label: {
+      name: 'label',
+      type: String,
+      nullable: false,
+    },
     language: { name: 'language', type: String, nullable: false },
   },
 });
