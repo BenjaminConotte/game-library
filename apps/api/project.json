@@ -24,7 +24,7 @@
     },
     "component-tests": {
       "executor": "@nrwl/jest:jest",
-      "cache": false,
+      "cache": true,
       "options": {
         "jestConfig": "apps/api/jest.config.ts",
         "testPathPattern": [".*\\.component\\.(spec\\.ts|test\\.js)$"]

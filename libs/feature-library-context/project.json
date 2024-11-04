@@ -7,7 +7,7 @@
   "targets": {
     "unit-test": {
       "executor": "@nx/jest:jest",
-      "cache": false,
+      "cache": true,
       "options": {
         "jestConfig": "libs/feature-library-context/jest.config.ts",
         "testPathPattern": [".*\\.unit\\.(spec\\.ts|test\\.js)$"]
