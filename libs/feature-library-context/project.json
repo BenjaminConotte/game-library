@@ -5,8 +5,16 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "unit-test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/feature-library-context/jest.config.ts",
+        "testPathPattern": [".*\\.unit\\.(spec\\.ts|test\\.js)$"]
+      }
+    },
     "build": {
       "executor": "@nx/js:tsc",
+      "dependsOn": ["unit-test"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/feature-library-context",
