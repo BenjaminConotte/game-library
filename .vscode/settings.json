@@ -22,17 +22,5 @@
   "terminal.integrated.fontFamily": "GoMono Nerd Font",
   "jest.jestCommandLine": "./node_modules/.bin/jest",
   "jest.rootPath": ".",
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 55004,
-      "driver": "PostgreSQL",
-      "name": "test",
-      "group": "test",
-      "database": "test",
-      "username": "test",
-      "password": "test"
-    }
-  ]
+  "sqltools.connections": []
 }
