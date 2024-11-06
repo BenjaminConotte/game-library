@@ -39,7 +39,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/api-e2e/**/*", "apps/api/**/*.component.spec.ts"]
+      "exclude": ["apps/api-e2e/**/*", "apps/api/**/*"]
     }
   ],
   "targetDefaults": {
