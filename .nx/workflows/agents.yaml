@@ -17,3 +17,11 @@ launch-templates:
       - name: Run pnpm install
         script: |-
           pnpm install
+      - name: Install Docker
+        script: |-
+          apt-get update
+          apt-get install -y docker.io
+      - name: Test install Docker
+        script: |-
+          docker --version
+          docker ps
