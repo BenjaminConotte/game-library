@@ -20,45 +20,40 @@ describe('AddGameToLibrary', () => {
   let useCase: AddGameToLibrary;
   let dataSource: DataSource;
   beforeAll(async () => {
-    try {
-      testPostgresContainer = await new PostgreSqlContainer().start();
-      testingModule = await Test.createTestingModule({
-        imports: [
-          TypeOrmModule.forRoot({
-            type: 'postgres',
-            host: testPostgresContainer.getHost(),
-            port: testPostgresContainer.getPort(),
-            database: testPostgresContainer.getDatabase(),
-            username: testPostgresContainer.getUsername(),
-            password: testPostgresContainer.getPassword(),
-            entities: [GameSchema],
-            synchronize: true,
-          }),
-        ],
-        providers: [
-          {
-            provide: ITransactionManager,
-            useFactory: (dataSource) =>
-              new TypeORMTransactionManager(dataSource),
-            inject: [getDataSourceToken()],
-          },
-          {
-            provide: IGameRepository,
-            useFactory: (ds) => new DatabaseGameRepository(ds),
-            inject: [getDataSourceToken()],
-          },
-          {
-            provide: AddGameToLibrary,
-            useFactory: (tm, gameRepos) => new AddGameToLibrary(tm, gameRepos),
-            inject: [ITransactionManager, IGameRepository],
-          },
-        ],
-      }).compile();
-      useCase = await testingModule.get(AddGameToLibrary);
-      dataSource = await testingModule.get(getDataSourceToken());
-    } catch (error) {
-      console.error(error);
-    }
+    testPostgresContainer = await new PostgreSqlContainer().start();
+    testingModule = await Test.createTestingModule({
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'postgres',
+          host: testPostgresContainer.getHost(),
+          port: testPostgresContainer.getPort(),
+          database: testPostgresContainer.getDatabase(),
+          username: testPostgresContainer.getUsername(),
+          password: testPostgresContainer.getPassword(),
+          entities: [GameSchema],
+          synchronize: true,
+        }),
+      ],
+      providers: [
+        {
+          provide: ITransactionManager,
+          useFactory: (dataSource) => new TypeORMTransactionManager(dataSource),
+          inject: [getDataSourceToken()],
+        },
+        {
+          provide: IGameRepository,
+          useFactory: (ds) => new DatabaseGameRepository(ds),
+          inject: [getDataSourceToken()],
+        },
+        {
+          provide: AddGameToLibrary,
+          useFactory: (tm, gameRepos) => new AddGameToLibrary(tm, gameRepos),
+          inject: [ITransactionManager, IGameRepository],
+        },
+      ],
+    }).compile();
+    useCase = await testingModule.get(AddGameToLibrary);
+    dataSource = await testingModule.get(getDataSourceToken());
   }, 20000);
   it('should add a game to the library', async () => {
     const cmd = new AddGameToLibraryCommand({
