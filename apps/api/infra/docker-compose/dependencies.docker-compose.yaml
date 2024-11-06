@@ -1,0 +1,17 @@
+version: '3.8'
+name: game-dependencies
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: svc-game-api
+      POSTGRES_PASSWORD: A1b2C3d4E5f6G7h
+      POSTGRES_DB: game_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
