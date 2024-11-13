@@ -1,6 +1,6 @@
 import { Command } from '../../../../Shared/App/Command';
 
-type AddGameToLibraryCommandBody = {
+export type AddGameToLibraryCommandBody = {
   ean: string;
   name: string;
   nameLanguage: string;

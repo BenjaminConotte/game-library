@@ -1,4 +1,5 @@
 import { Mock, mock } from 'ts-jest-mocker';
+import { Logger } from '../../../../Shared/App/Utils';
 import { TransactionManager } from '../../../../Shared/Domain';
 import { Game } from '../../../Domain/Game/Game';
 import { GameRepository } from '../../../Domain/Game/GameRepository';
@@ -10,9 +11,11 @@ describe('Add game to library', () => {
   const transactionManager: TransactionManager = mock<TransactionManager>();
   let gameRepository: Mock<GameRepository>;
   let useCase: AddGameToLibrary;
+  let logger: Mock<Logger>;
   beforeEach(() => {
     gameRepository = mock<GameRepository>();
-    useCase = new AddGameToLibrary(transactionManager, gameRepository);
+    logger = mock<Logger>();
+    useCase = new AddGameToLibrary(transactionManager, logger, gameRepository);
   });
   it('should throw an error if the game is already in the library', async () => {
     gameRepository.findByEAN.mockResolvedValue(

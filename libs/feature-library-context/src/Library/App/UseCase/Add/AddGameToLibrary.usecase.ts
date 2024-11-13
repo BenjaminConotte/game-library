@@ -1,4 +1,5 @@
 import { CommandHandler } from '../../../../Shared/App/Command';
+import { Logger } from '../../../../Shared/App/Utils';
 import { TransactionManager } from '../../../../Shared/Domain';
 import { GameRepository } from '../../../Domain/Game';
 import { Game } from '../../../Domain/Game/Game';
@@ -11,9 +12,10 @@ export class AddGameToLibrary extends CommandHandler<
 > {
   constructor(
     transactionManager: TransactionManager,
+    logger: Logger,
     private readonly _gameRepository: GameRepository
   ) {
-    super(transactionManager);
+    super(transactionManager, logger);
   }
   async handle(command: AddGameToLibraryCommand): Promise<void> {
     if (await this._gameRepository.findByEAN(command.body.ean)) {
