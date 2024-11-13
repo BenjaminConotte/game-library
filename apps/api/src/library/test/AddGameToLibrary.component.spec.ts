@@ -4,6 +4,7 @@ import {
 } from '@game-library/library-context/Library/App/UseCase/Add';
 import { IGameRepository } from '@game-library/library-context/Library/Domain/Game';
 import { ITransactionManager } from '@game-library/library-context/Shared/Domain';
+import { Logger } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
 import {
@@ -47,7 +48,12 @@ describe('AddGameToLibrary', () => {
         },
         {
           provide: AddGameToLibrary,
-          useFactory: (tm, gameRepos) => new AddGameToLibrary(tm, gameRepos),
+          useFactory: (tm, gameRepos) =>
+            new AddGameToLibrary(
+              tm,
+              new Logger(AddGameToLibrary.name),
+              gameRepos
+            ),
           inject: [ITransactionManager, IGameRepository],
         },
       ],
