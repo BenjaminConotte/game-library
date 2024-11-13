@@ -3,7 +3,7 @@ import { IGameRepository } from '@game-library/library-context/Library/Domain/Ga
 import { ITransactionManager } from '@game-library/library-context/Shared/Domain';
 import { Module } from '@nestjs/common';
 import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
-import { GamesController } from './infra/controller/GamesController';
+import { GamesController } from './infra/controller/Games.controller';
 import {
   DatabaseGameRepository,
   TypeORMTransactionManager,

@@ -14,6 +14,15 @@ module.exports = {
       optimization: false,
       outputHashing: 'none',
       generatePackageJson: true,
+      transformers: [
+        {
+          name: '@nestjs/swagger/plugin',
+          options: {
+            dtoFileNameSuffix: ['.dto.ts', '.entity.ts'],
+          },
+        },
+      ],
+      sourceMap: true,
     }),
   ],
 };

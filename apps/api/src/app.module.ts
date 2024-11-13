@@ -11,6 +11,7 @@ import { LibraryModule } from './library/library.module';
       isGlobal: true,
       validate: (config: Record<string, string | number>) => {
         const validatedConfig: Config = {
+          env: config.APP_ENV as string,
           database: {
             type:
               config.DATABASE_TYPE in ['postgres', 'mysql', 'mssql']
@@ -41,7 +42,7 @@ import { LibraryModule } from './library/library.module';
           password: databaseConfig.password,
           database: databaseConfig.database,
           entities: [GameSchema],
-          synchronize: true,
+          synchronize: configService.get<string>('env') === 'local',
         };
       },
     }),

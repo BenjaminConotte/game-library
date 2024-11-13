@@ -7,5 +7,6 @@ export interface DatabaseConfig {
   database: string;
 }
 export interface Config {
+  env: string;
   database: DatabaseConfig;
 }
