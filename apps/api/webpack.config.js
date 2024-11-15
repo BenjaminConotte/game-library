@@ -3,7 +3,7 @@ const { join } = require('path');
 
 module.exports = {
   output: {
-    path: join(__dirname, '../../dist/apps/api'),
+    path: join(__dirname, '../../dist/apps/app'),
   },
   plugins: [
     new NxAppWebpackPlugin({
@@ -14,14 +14,6 @@ module.exports = {
       optimization: false,
       outputHashing: 'none',
       generatePackageJson: true,
-      transformers: [
-        {
-          name: '@nestjs/swagger/plugin',
-          options: {
-            dtoFileNameSuffix: ['.dto.ts', '.entity.ts'],
-          },
-        },
-      ],
       sourceMap: true,
     }),
   ],
