@@ -23,10 +23,8 @@ export class AddGameToLibrary extends CommandHandler<
     }
     const gameToCreate = Game.create({
       ean: command.body.ean,
-      name: {
-        label: command.body.name,
-        language: command.body.nameLanguage,
-      },
+      name: command.body.name,
+      language: command.body.nameLanguage,
       type: {
         label: command.body.type as GameTypeEnum,
         isCooperative: command.body.isCoop,

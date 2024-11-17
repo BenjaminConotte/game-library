@@ -1,18 +1,37 @@
+import {
+  ComposedDomainValidationException,
+  LanguageEnum,
+} from '../../../Shared/Domain';
 import { Aggregate } from '../../../Shared/Domain/Aggregate';
 import { EAN } from './EAN';
 import { GameName } from './GameName';
-import { CreateGameProps, GamePrimitivesProps, GameProps } from './GameProps';
+import { GameProps } from './GameProps';
 import { GameType } from './GameType';
+import { GameTypeEnum } from './GameTypeEnum';
 
-export class Game extends Aggregate<EAN, GamePrimitivesProps> {
+export class Game extends Aggregate<EAN, GameProps> {
   private _name: GameName;
   private _type: GameType;
+  private _language: LanguageEnum;
 
   constructor(props: GameProps) {
+    const errors = [];
     super();
-    this.id = props.id;
-    this.name = props.name;
-    this.type = props.type;
+    try {
+      this.id = new EAN(props.ean);
+    } catch (error) {
+      errors.push(error.message);
+    }
+    try {
+      this.name = new GameName(props.name);
+    } catch (error) {
+      errors.push(error.message);
+    }
+    this._language = props.language as LanguageEnum;
+    this.type = new GameType(props.type.label, props.type.isCooperative);
+    if (errors.length > 0) {
+      throw new ComposedDomainValidationException(errors);
+    }
   }
   private set name(name: GameName) {
     this._name = name;
@@ -21,29 +40,19 @@ export class Game extends Aggregate<EAN, GamePrimitivesProps> {
     this._type = type;
   }
 
-  static create(props: CreateGameProps) {
-    return new Game({
-      id: new EAN(props.ean),
-      name: new GameName(props.name.label, props.name.language),
-      type: new GameType(props.type.label, props.type.isCooperative),
-    });
+  static create(props: GameProps): Game {
+    return new Game(props);
   }
-  static instanciate(props: GamePrimitivesProps): Game {
-    return new Game({
-      id: new EAN(props.id),
-      name: new GameName(props.name.label, props.name.language),
-      type: new GameType(props.type.label, props.type.isCooperative),
-    });
+  static instanciate(props: GameProps): Game {
+    return new Game(props);
   }
-  toPrimitives(): GamePrimitivesProps {
+  toPrimitives(): GameProps {
     return {
-      id: this.id.value,
-      name: {
-        label: this._name.value,
-        language: this._name.language,
-      },
+      ean: this.id.value,
+      name: this._name.value,
+      language: this._language,
       type: {
-        label: this._type.value,
+        label: this._type.value as GameTypeEnum,
         isCooperative: this._type.isCooperative,
       },
     };

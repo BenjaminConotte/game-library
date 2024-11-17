@@ -21,10 +21,8 @@ describe('Add game to library', () => {
     gameRepository.findByEAN.mockResolvedValue(
       Game.create({
         ean: '0123456789012',
-        name: {
-          label: 'My game',
-          language: 'en',
-        },
+        name: 'My game',
+        language: 'en',
         type: {
           label: GameTypeEnum.BOARD_GAME,
           isCooperative: true,
@@ -50,10 +48,8 @@ describe('Add game to library', () => {
     gameRepository.save.mockResolvedValue(
       Game.create({
         ean: '0123456789012',
-        name: {
-          label: 'My game',
-          language: 'en',
-        },
+        name: 'My game',
+        language: 'en',
         type: {
           label: GameTypeEnum.BOARD_GAME,
           isCooperative: true,
