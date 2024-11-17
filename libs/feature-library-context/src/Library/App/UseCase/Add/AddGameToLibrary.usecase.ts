@@ -5,6 +5,7 @@ import { GameRepository } from '../../../Domain/Game';
 import { Game } from '../../../Domain/Game/Game';
 import { GameTypeEnum } from '../../../Domain/Game/GameTypeEnum';
 import { AddGameToLibraryCommand } from './AddGameToLibrary.command';
+import { GameCreationException } from './GameCreation.exception';
 
 export class AddGameToLibrary extends CommandHandler<
   AddGameToLibraryCommand,
@@ -21,16 +22,20 @@ export class AddGameToLibrary extends CommandHandler<
     if (await this._gameRepository.findByEAN(command.body.ean)) {
       throw new RangeError('Game is already in the library');
     }
-    const gameToCreate = Game.create({
-      ean: command.body.ean,
-      name: command.body.name,
-      language: command.body.nameLanguage,
-      type: {
-        label: command.body.type as GameTypeEnum,
-        isCooperative: command.body.isCoop,
-      },
-    });
-    await this._gameRepository.save(gameToCreate);
+    try {
+      const gameToCreate = Game.create({
+        ean: command.body.ean,
+        name: command.body.name,
+        language: command.body.nameLanguage,
+        type: {
+          label: command.body.type as GameTypeEnum,
+          isCooperative: command.body.isCoop,
+        },
+      });
+      await this._gameRepository.save(gameToCreate);
+    } catch (error) {
+      throw new GameCreationException(error.message);
+    }
   }
   async setupTransaction(): Promise<void> {
     return this._transactionManager.startTransaction().then(() => {
