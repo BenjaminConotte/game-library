@@ -24,7 +24,7 @@ import { GameSchema } from './infra/typeorm/schema';
     },
     {
       provide: AddGameToLibrary,
-      useFactory: (tm, logger, gameRepos) =>
+      useFactory: (tm, gameRepos) =>
         new AddGameToLibrary(tm, new Logger(AddGameToLibrary.name), gameRepos),
       inject: [ITransactionManager, IGameRepository],
     },

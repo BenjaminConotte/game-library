@@ -10,8 +10,10 @@ import {
   HttpStatus,
   Logger,
   Post,
+  Res,
 } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { AddGameToLibraryDto } from './dto';
 
 @Controller('games')
@@ -21,14 +23,23 @@ export class GamesController {
   constructor(private readonly _addGameToLibrary: AddGameToLibrary) {}
 
   @Post('add')
+  @ApiOperation({
+    summary: 'Add a game to the library',
+    description: 'Add a new game into the system to be able to use it.',
+  })
   @ApiBody({ type: AddGameToLibraryDto })
-  async addGameToLibrary(@Body() body: AddGameToLibraryCommandBody) {
+  @ApiResponse({ status: 201, description: 'Game added to the library' })
+  async addGameToLibrary(
+    @Body() body: AddGameToLibraryCommandBody,
+    @Res() res: Response
+  ) {
     const addGameToLibraryDto = new AddGameToLibraryCommand(body);
     this._logger.log(
       'Receive a new command of type: ' + addGameToLibraryDto.constructor.name
     );
     return await this._addGameToLibrary
       .execute(addGameToLibraryDto)
+      .then(() => res.status(HttpStatus.CREATED).send())
       .catch((error) => {
         throw new HttpException(
           error.message,
