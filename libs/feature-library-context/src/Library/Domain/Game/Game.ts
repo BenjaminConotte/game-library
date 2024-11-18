@@ -28,7 +28,11 @@ export class Game extends Aggregate<EAN, GameProps> {
       errors.push(error.message);
     }
     this._language = props.language as LanguageEnum;
-    this.type = new GameType(props.type.label, props.type.isCooperative);
+    try {
+      this.type = new GameType(props.type.label, props.type.isCooperative);
+    } catch (error) {
+      errors.push(error.message);
+    }
     if (errors.length > 0) {
       throw new ComposedDomainValidationException(errors);
     }
