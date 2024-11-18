@@ -43,7 +43,6 @@ export class Game extends Aggregate<EAN, GameProps> {
   private set type(type: GameType) {
     this._type = type;
   }
-
   static create(props: GameProps): Game {
     return new Game(props);
   }
