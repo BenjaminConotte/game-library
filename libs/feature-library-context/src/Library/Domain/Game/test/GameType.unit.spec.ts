@@ -11,4 +11,9 @@ describe('GameType', () => {
     expect(gameType.value).toBe('deck-building');
     expect(gameType.isCooperative).toBe(true);
   });
+  it('should catch an RangeError for a type not declared into the system.', () => {
+    expect(() => new GameType('Molki')).toThrow(
+      'Molki is not a valid game type.'
+    );
+  });
 });
