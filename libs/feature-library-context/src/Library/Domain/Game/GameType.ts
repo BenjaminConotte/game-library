@@ -13,7 +13,7 @@ export class GameType {
   }
   private set value(aGameType: string) {
     if (!(Object.values(GameTypeEnum) as string[]).includes(aGameType))
-      throw new RangeError(`${aGameType} is not a valid game type.`);
+      throw new RangeError(`${aGameType} is not a valid game type`);
     this._value = aGameType;
   }
   get isCooperative() {

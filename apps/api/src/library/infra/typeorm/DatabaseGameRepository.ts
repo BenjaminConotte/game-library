@@ -2,7 +2,7 @@ import {
   Game,
   GameRepository,
 } from '@game-library/library-context/Library/Domain/Game';
-import { GamePrimitivesProps } from '@game-library/library-context/Library/Domain/Game/GameProps';
+import { GameProps } from '@game-library/library-context/Library/Domain/Game/GameProps';
 import { TransactionManager } from '@game-library/library-context/Shared/Domain';
 import { DataSource, QueryRunner } from 'typeorm';
 import { GameSchema } from './schema/GameSchema';
@@ -13,13 +13,13 @@ export class DatabaseGameRepository implements GameRepository {
 
   constructor(private readonly _dataSource: DataSource) {}
 
-  private convertToAggregate(props: GamePrimitivesProps): Game {
+  private convertToAggregate(props: GameProps): Game {
     return Game.instanciate(props);
   }
   async findByEAN(ean: string): Promise<Game | null> {
     return this._dataSource
-      .getRepository<GamePrimitivesProps>(GameSchema)
-      .findOneBy({ id: ean })
+      .getRepository<GameProps>(GameSchema)
+      .findOneBy({ ean: ean })
       .then((props) => {
         return props ? this.convertToAggregate(props) : null;
       });
@@ -31,7 +31,7 @@ export class DatabaseGameRepository implements GameRepository {
         .then(() => game);
     } else {
       return await this._dataSource
-        .getRepository<GamePrimitivesProps>(GameSchema)
+        .getRepository<GameProps>(GameSchema)
         .save(game.toPrimitives())
         .then(() => game);
     }

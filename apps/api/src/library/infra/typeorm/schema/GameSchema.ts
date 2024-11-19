@@ -1,17 +1,6 @@
-import { GamePrimitivesProps } from '@game-library/library-context/Library/Domain/Game/GameProps';
+import { GameProps } from '@game-library/library-context/Library/Domain/Game/GameProps';
 import { EntitySchema } from 'typeorm';
 
-const GameNameSchema = new EntitySchema({
-  name: 'name',
-  columns: {
-    label: {
-      name: 'label',
-      type: String,
-      nullable: false,
-    },
-    language: { name: 'language', type: String, nullable: false },
-  },
-});
 const GameTypeSchema = new EntitySchema({
   name: 'type',
   columns: {
@@ -19,19 +8,23 @@ const GameTypeSchema = new EntitySchema({
     isCooperative: { name: 'isCooperative', type: Boolean, nullable: false },
   },
 });
-export const GameSchema = new EntitySchema<GamePrimitivesProps>({
+export const GameSchema = new EntitySchema<GameProps>({
   name: 'tbl_game',
   columns: {
-    id: {
+    ean: {
       type: String,
       primary: true,
     },
+    name: {
+      type: String,
+      nullable: false,
+    },
+    language: {
+      type: String,
+      nullable: false,
+    },
   },
   embeddeds: {
-    name: {
-      schema: GameNameSchema,
-      prefix: 'name_',
-    },
     type: {
       schema: GameTypeSchema,
       prefix: 'type_',

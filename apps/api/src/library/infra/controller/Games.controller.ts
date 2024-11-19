@@ -2,11 +2,11 @@ import {
   AddGameToLibrary,
   AddGameToLibraryCommand,
   AddGameToLibraryCommandBody,
+  GameCreationException,
 } from '@game-library/library-context/Library/App/UseCase/Add';
 import {
   Body,
   Controller,
-  HttpException,
   HttpStatus,
   Logger,
   Post,
@@ -28,7 +28,18 @@ export class GamesController {
     description: 'Add a new game into the system to be able to use it.',
   })
   @ApiBody({ type: AddGameToLibraryDto })
-  @ApiResponse({ status: 201, description: 'Game added to the library' })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Game added to the library',
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Bad request with the given paramters',
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'A game is already registered with the given EAN',
+  })
   async addGameToLibrary(
     @Body() body: AddGameToLibraryCommandBody,
     @Res() res: Response
@@ -41,10 +52,19 @@ export class GamesController {
       .execute(addGameToLibraryDto)
       .then(() => res.status(HttpStatus.CREATED).send())
       .catch((error) => {
-        throw new HttpException(
-          error.message,
-          HttpStatus.INTERNAL_SERVER_ERROR
-        );
+        this._logger.error(error.message);
+        if (error instanceof RangeError)
+          res.status(HttpStatus.CONFLICT).send({
+            error: 'A game with the given EAN is already registered.',
+          });
+        else if (error instanceof GameCreationException)
+          res.status(HttpStatus.BAD_REQUEST).send({
+            error: error.message,
+          });
+        else
+          res
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({ error: 'An error occurred while adding the game.' });
       });
   }
 }

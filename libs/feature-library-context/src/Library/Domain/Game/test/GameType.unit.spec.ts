@@ -13,7 +13,7 @@ describe('GameType', () => {
   });
   it('should catch an RangeError for a type not declared into the system.', () => {
     expect(() => new GameType('Molki')).toThrow(
-      'Molki is not a valid game type.'
+      'Molki is not a valid game type'
     );
   });
 });

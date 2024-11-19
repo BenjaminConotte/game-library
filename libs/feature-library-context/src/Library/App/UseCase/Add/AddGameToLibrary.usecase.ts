@@ -32,8 +32,12 @@ export class AddGameToLibrary extends CommandHandler<
           isCooperative: command.body.isCoop,
         },
       });
+      this._logger.log(
+        `Game with ean ${gameToCreate.id.value} added to the library.`
+      );
       await this._gameRepository.save(gameToCreate);
     } catch (error) {
+      this._logger.error(error.message);
       throw new GameCreationException(error.message);
     }
   }
