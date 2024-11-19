@@ -16,6 +16,8 @@ describe('Add game to library', () => {
   beforeEach(() => {
     gameRepository = mock<GameRepository>();
     logger = mock<Logger>();
+    logger.log.mockReturnValue();
+    logger.error.mockReturnValue();
     useCase = new AddGameToLibrary(transactionManager, logger, gameRepository);
   });
   it('should add a game to the library', async () => {
@@ -38,8 +40,12 @@ describe('Add game to library', () => {
       type: GameTypeEnum.BOARD_GAME.toString(),
       isCoop: true,
     });
-    await useCase.handle(command);
+    const result = await useCase.handle(command);
     expect(gameRepository.save).toHaveBeenCalledWith(expect.any(Game));
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.message).toBe('Game added to the library');
+    }
   });
   it('should throw a RangeError if the game is already in the library', async () => {
     gameRepository.findByEAN.mockResolvedValue(

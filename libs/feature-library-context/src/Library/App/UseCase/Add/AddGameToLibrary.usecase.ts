@@ -1,4 +1,4 @@
-import { CommandHandler } from '../../../../Shared/App/Command';
+import { CommandHandler, Result } from '../../../../Shared/App/Command';
 import { Logger } from '../../../../Shared/App/Utils';
 import { TransactionManager } from '../../../../Shared/Domain';
 import { GameRepository } from '../../../Domain/Game';
@@ -7,10 +7,7 @@ import { GameTypeEnum } from '../../../Domain/Game/GameTypeEnum';
 import { AddGameToLibraryCommand } from './AddGameToLibrary.command';
 import { GameCreationException } from './GameCreation.exception';
 
-export class AddGameToLibrary extends CommandHandler<
-  AddGameToLibraryCommand,
-  void
-> {
+export class AddGameToLibrary extends CommandHandler<AddGameToLibraryCommand> {
   constructor(
     transactionManager: TransactionManager,
     logger: Logger,
@@ -18,7 +15,7 @@ export class AddGameToLibrary extends CommandHandler<
   ) {
     super(transactionManager, logger);
   }
-  async handle(command: AddGameToLibraryCommand): Promise<void> {
+  async handle(command: AddGameToLibraryCommand): Promise<Result> {
     if (await this._gameRepository.findByEAN(command.body.ean)) {
       throw new RangeError('Game is already in the library');
     }
@@ -35,7 +32,9 @@ export class AddGameToLibrary extends CommandHandler<
       this._logger.log(
         `Game with ean ${gameToCreate.id.value} added to the library.`
       );
-      await this._gameRepository.save(gameToCreate);
+      return this._gameRepository
+        .save(gameToCreate)
+        .then(() => ({ success: true, message: 'Game added to the library' }));
     } catch (error) {
       this._logger.error(error.message);
       throw new GameCreationException(error.message);
