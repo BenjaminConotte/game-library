@@ -22,5 +22,17 @@
   "terminal.integrated.fontFamily": "GoMono Nerd Font",
   "jest.jestCommandLine": "./node_modules/.bin/jest",
   "jest.rootPath": ".",
-  "sqltools.connections": []
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Local",
+      "group": "Local",
+      "database": "game_db",
+      "username": "svc-game-api",
+      "password": "A1b2C3d4E5f6G7h"
+    }
+  ]
 }
