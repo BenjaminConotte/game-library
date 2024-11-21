@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@game-library/feature-iam-context": [
+        "libs/feature-iam-context/src/index.ts"
+      ],
       "@game-library/library-context/*": ["libs/feature-library-context/src/*"]
     }
   },
