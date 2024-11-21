@@ -4,9 +4,11 @@ import {
   AddGameToLibraryCommandBody,
   GameCreationException,
 } from '@game-library/library-context/Library/App/UseCase/Add';
+import { SearchGame } from '@game-library/library-context/Library/App/UseCase/Search';
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Logger,
   Post,
@@ -20,7 +22,18 @@ import { AddGameToLibraryDto } from './dto';
 @ApiTags('Games')
 export class GamesController {
   private readonly _logger = new Logger(GamesController.name);
-  constructor(private readonly _addGameToLibrary: AddGameToLibrary) {}
+  constructor(
+    private readonly _addGameToLibrary: AddGameToLibrary,
+    private readonly _searchGame: SearchGame
+  ) {}
+
+  @Get()
+  @ApiOperation({
+    summary: 'Search games into the library',
+  })
+  async searchGames() {
+    return await this._searchGame.query(null);
+  }
 
   @Post('add')
   @ApiOperation({

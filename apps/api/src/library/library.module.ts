@@ -1,4 +1,5 @@
 import { AddGameToLibrary } from '@game-library/library-context/Library/App/UseCase/Add';
+import { SearchGame } from '@game-library/library-context/Library/App/UseCase/Search';
 import { IGameRepository } from '@game-library/library-context/Library/Domain/Game';
 import { ITransactionManager } from '@game-library/library-context/Shared/Domain';
 import { Logger, Module } from '@nestjs/common';
@@ -27,6 +28,12 @@ import { GameSchema } from './infra/typeorm/schema';
       useFactory: (tm, gameRepos) =>
         new AddGameToLibrary(tm, new Logger(AddGameToLibrary.name), gameRepos),
       inject: [ITransactionManager, IGameRepository],
+    },
+    {
+      provide: SearchGame,
+      useFactory: (gameRepos) =>
+        new SearchGame(gameRepos, new Logger(SearchGame.name)),
+      inject: [IGameRepository],
     },
   ],
   controllers: [GamesController],

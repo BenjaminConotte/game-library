@@ -12,6 +12,12 @@ export class DatabaseGameRepository implements GameRepository {
   private _queryBuilder: QueryRunner = undefined;
 
   constructor(private readonly _dataSource: DataSource) {}
+  async list(): Promise<Game[]> {
+    return this._dataSource
+      .getRepository<GameProps>(GameSchema)
+      .find()
+      .then((games) => games.map(this.convertToAggregate));
+  }
 
   private convertToAggregate(props: GameProps): Game {
     return Game.instanciate(props);
