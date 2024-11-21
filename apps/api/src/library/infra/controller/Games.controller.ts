@@ -4,7 +4,10 @@ import {
   AddGameToLibraryCommandBody,
   GameCreationException,
 } from '@game-library/library-context/Library/App/UseCase/Add';
-import { SearchGame } from '@game-library/library-context/Library/App/UseCase/Search';
+import {
+  SearchGame,
+  SearchGameQuery,
+} from '@game-library/library-context/Library/App/UseCase/Search';
 import {
   Body,
   Controller,
@@ -12,9 +15,16 @@ import {
   HttpStatus,
   Logger,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Response } from 'express';
 import { AddGameToLibraryDto } from './dto';
 
@@ -31,8 +41,21 @@ export class GamesController {
   @ApiOperation({
     summary: 'Search games into the library',
   })
-  async searchGames() {
-    return await this._searchGame.query(null);
+  @ApiQuery({
+    name: 'ean',
+    description: 'Part of the EAN of the look up game',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'name',
+    description: 'Part of the name of the look up game',
+    required: false,
+  })
+  async searchGames(
+    @Query('ean') ean: string = null,
+    @Query('name') name: string = null
+  ) {
+    return await this._searchGame.query(new SearchGameQuery(ean, name));
   }
 
   @Post('add')

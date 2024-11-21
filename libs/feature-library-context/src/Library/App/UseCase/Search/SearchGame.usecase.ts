@@ -22,7 +22,7 @@ export class SearchGame extends QueryHandler<
   }
   public query(query: SearchGameQuery): Promise<{ data: GameResult[] }> {
     const initialResult = { data: [] };
-    return this._gameRepository.list().then((games) =>
+    return this._gameRepository.list({ ...query.target }).then((games) =>
       games.reduce((acc, game) => {
         acc.data.push({
           ...game.toPrimitives(),

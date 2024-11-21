@@ -13,7 +13,7 @@ describe('Search game', () => {
     useCase = new SearchGame(gameRepository, logger);
   });
   it('should be able to search games without any filters', async () => {
-    const query = new SearchGameQuery('');
+    const query = new SearchGameQuery();
     gameRepository.list.mockResolvedValue([
       Game.create({
         ean: '1234567890123',
@@ -40,6 +40,32 @@ describe('Search game', () => {
     expect(result.data[1].ean).toEqual('2345678901234');
     expect(result.data[1].name).toEqual('Game 2');
     expect(result.data[2].ean).toEqual('3456789012345');
+  });
+  it('should be able to search games with part of Name', async () => {
+    const query = new SearchGameQuery(null, 'kyj');
+    gameRepository.list.mockResolvedValue([
+      Game.create({
+        ean: '1234567890123',
+        name: 'Skyjo',
+        language: 'en',
+        type: { label: GameTypeEnum.BOARD_GAME, isCooperative: true },
+      }),
+      Game.create({
+        ean: '2345678901234',
+        name: 'Kijeal',
+        language: 'fr',
+        type: { label: GameTypeEnum.CARD_GAME, isCooperative: true },
+      }),
+    ]);
+    const result = await useCase.query(query);
+    expect(gameRepository.list).toHaveBeenCalledWith(
+      expect.objectContaining({ partOfName: 'kyj' })
+    );
+    expect(result.data.length).toEqual(2);
+    expect(result.data[0].ean).toEqual('1234567890123');
+    expect(result.data[0].name).toEqual('Skyjo');
+    expect(result.data[1].ean).toEqual('2345678901234');
+    expect(result.data[1].name).toEqual('Kijeal');
   });
   afterEach(() => {
     jest.clearAllMocks();
