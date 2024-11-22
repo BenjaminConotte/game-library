@@ -1,4 +1,4 @@
-import { BaseRepository } from '../../../Shared/Domain';
+import { BaseRepository } from '@game-library/shared/Shared/Domain';
 import { Game } from './Game';
 
 export const IGameRepository = Symbol('IGameRepository');

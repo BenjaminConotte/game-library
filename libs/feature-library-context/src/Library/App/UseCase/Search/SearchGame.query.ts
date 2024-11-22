@@ -1,4 +1,4 @@
-import { Query } from '../../../../Shared/App/Query';
+import { Query } from '@game-library/shared/Shared/App/Query';
 
 export class SearchGameQuery
   implements Query<{ partOfEAN?: string; partOfName?: string }, unknown>

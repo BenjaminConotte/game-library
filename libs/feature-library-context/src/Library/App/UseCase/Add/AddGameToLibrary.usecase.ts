@@ -1,6 +1,9 @@
-import { CommandHandler, Result } from '../../../../Shared/App/Command';
-import { Logger } from '../../../../Shared/App/Utils';
-import { TransactionManager } from '../../../../Shared/Domain';
+import {
+  CommandHandler,
+  Result,
+} from '@game-library/shared/Shared/App/Command';
+import { Logger } from '@game-library/shared/Shared/App/Utils';
+import { TransactionManager } from '@game-library/shared/Shared/Domain';
 import { GameRepository } from '../../../Domain/Game';
 import { Game } from '../../../Domain/Game/Game';
 import { GameTypeEnum } from '../../../Domain/Game/GameTypeEnum';
@@ -15,7 +18,7 @@ export class AddGameToLibrary extends CommandHandler<AddGameToLibraryCommand> {
   ) {
     super(transactionManager, logger);
   }
-  async handle(command: AddGameToLibraryCommand): Promise<Result> {
+  public async handle(command: AddGameToLibraryCommand): Promise<Result> {
     if (await this._gameRepository.findByEAN(command.body.ean)) {
       throw new RangeError('Game is already in the library');
     }

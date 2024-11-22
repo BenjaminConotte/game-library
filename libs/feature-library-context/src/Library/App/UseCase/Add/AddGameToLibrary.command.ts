@@ -1,4 +1,4 @@
-import { Command } from '../../../../Shared/App/Command';
+import { Command } from '@game-library/shared/Shared/App/Command';
 
 export type AddGameToLibraryCommandBody = {
   ean: string;

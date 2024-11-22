@@ -1,5 +1,5 @@
+import { Logger } from '@game-library/shared/Shared/App/Utils';
 import { mock, Mock } from 'ts-jest-mocker';
-import { Logger } from '../../../../Shared/App/Utils';
 import { Game, GameRepository, GameTypeEnum } from '../../../Domain/Game';
 import { SearchGameQuery } from './SearchGame.query';
 import { SearchGame } from './SearchGame.usecase';

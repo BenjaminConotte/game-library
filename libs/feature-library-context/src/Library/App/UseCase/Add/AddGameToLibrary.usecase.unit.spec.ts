@@ -1,6 +1,6 @@
+import { Logger } from '@game-library/shared/Shared/App/Utils';
+import { TransactionManager } from '@game-library/shared/Shared/Domain';
 import { Mock, mock } from 'ts-jest-mocker';
-import { Logger } from '../../../../Shared/App/Utils';
-import { TransactionManager } from '../../../../Shared/Domain';
 import { Game } from '../../../Domain/Game/Game';
 import { GameRepository } from '../../../Domain/Game/GameRepository';
 import { GameTypeEnum } from '../../../Domain/Game/GameTypeEnum';

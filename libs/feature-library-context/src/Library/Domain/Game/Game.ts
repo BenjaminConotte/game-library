@@ -1,8 +1,8 @@
 import {
   ComposedDomainValidationException,
   LanguageEnum,
-} from '../../../Shared/Domain';
-import { Aggregate } from '../../../Shared/Domain/Aggregate';
+} from '@game-library/shared/Shared/Domain';
+import { Aggregate } from '@game-library/shared/Shared/Domain/Aggregate';
 import { EAN } from './EAN';
 import { GameName } from './GameName';
 import { GameProps } from './GameProps';

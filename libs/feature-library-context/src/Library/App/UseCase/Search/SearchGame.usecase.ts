@@ -1,5 +1,5 @@
-import { QueryHandler } from '../../../../Shared/App/Query';
-import { Logger } from '../../../../Shared/App/Utils';
+import { QueryHandler } from '@game-library/shared/Shared/App/Query';
+import { Logger } from '@game-library/shared/Shared/App/Utils';
 import { GameRepository } from '../../../Domain/Game';
 import { SearchGameQuery } from './SearchGame.query';
 
